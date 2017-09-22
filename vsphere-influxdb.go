@@ -297,10 +297,12 @@ func (vcenter *VCenter) Query(config Configuration, InfluxDBClient influxclient.
 
 	//Retrieve properties for Cluster(s)
 	var clmo []mo.ClusterComputeResource
-	err = pc.Retrieve(ctx, clusterRefs, []string{"name", "configuration", "host"}, &clmo)
-	if err != nil {
-		fmt.Println(err)
-		return
+	if len(clusterRefs) > 0 {
+		err = pc.Retrieve(ctx, clusterRefs, []string{"name", "configuration", "host"}, &clmo)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
 
 	//Retrieve properties for ResourcePool
